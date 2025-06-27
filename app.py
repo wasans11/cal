@@ -5,7 +5,7 @@ import catboost
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-    return joblib.load('model.pkl')
+    return joblib.load('m0627.pkl')
 
 model = load_model()
 
