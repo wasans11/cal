@@ -97,13 +97,13 @@ if st.button("🔥 화재 위험도 예측"):
     
     <div style="margin-bottom: 15px;">
         <strong>🔹 훈련 데이터 성능:</strong><br>
-        정확도 87.0% | 화재 탐지율 91.3% | 정밀도 91.4%
+         화재 탐지율 99% | 정밀도 99%
     </div>
     
     <div style="margin-bottom: 15px;">
         <strong>🔹 실제 테스트 성능:</strong><br>
-        • Test1 (화재 2%): 탐지율 90.0%, 정밀도 5.0%<br>
-        • Test2 (화재 5%): 탐지율 84.0%, 정밀도 13.6%
+        • Test1 (화재 2%): 탐지율 100%, 정밀도 5.0%<br>
+        • Test2 (화재 5%): 탐지율 88.0%, 정밀도 12%
     </div>
     
     <div class="performance-grid" style="display:flex; gap:20px; margin-bottom: 15px;">
