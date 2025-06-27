@@ -1,28 +1,10 @@
-import pandas as pd; import numpy as np
-import warnings; warnings.filterwarnings('ignore')
-import seaborn as sns; 
-from catboost import CatBoostClassifier
-from sklearn.model_selection import cross_val_score, train_test_split
-from sklearn.metrics import classification_report, confusion_matrix, precision_score, recall_score, f1_score
-import optuna; optuna.logging.set_verbosity(optuna.logging.ERROR)
-import shap
-import featuretools as ft
-
-from sklearn.mixture import GaussianMixture
-from IPython.display import Image
-from IPython.display import display, HTML
-import base64
-from io import BytesIO
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-plt.rcParams['font.family'] = 'Malgun Gothic'
-plt.rcParams['axes.unicode_minus'] = False 
-font_path = 'C:/Windows/Fonts/malgun.ttf'
-font_prop = fm.FontProperties(fname=font_path)
-# 주피터 노트북 재시작 후 맨 처음에 실행
-import matplotlib.pyplot as plt
-plt.rcParams['font.family'] = 'Malgun Gothic'
-plt.rcParams['axes.unicode_minus'] = False
-
-import matplotlib
-matplotlib.rcParams['axes.unicode_minus'] = False
+streamlit
+pandas
+numpy
+seaborn
+catboost
+scikit-learn
+optuna
+shap
+featuretools
+matplotlib
