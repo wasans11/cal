@@ -40,16 +40,16 @@ if st.button("🔥 화재 위험도 예측"):
     risk = proba * 100
     st.write(f"위험도 (0~100): {risk:.1f}")
 
-    if risk >= 80:
+    if risk >= 85:
         level = "🚨 매우 높음"
         color = "red"
-    elif risk >= 60:
+    elif risk >= 65:
         level = "⚠️ 높음"
         color = "orange"
-    elif risk >= 40:
+    elif risk >= 45:
         level = "🔶 보통"
         color = "yellow"
-    elif risk >= 20:
+    elif risk >= 25:
         level = "💚 낮음"
         color = "green"
     else:
