@@ -108,10 +108,8 @@ recent_rain_level = st.radio(
     index=1
 )
 
-# 풍향 입력
-풍향_선택 = st.selectbox("풍향", ['북','북동','동','남동','남','남서','서','북서'])
-풍향_맵 = {'북':0,'북동':1,'동':2,'남동':3,'남':4,'남서':5,'서':6,'북서':7}
-풍향 = 풍향_맵[풍향_선택]
+# 풍향 입력 (문자열로 직접 사용)
+풍향 = st.selectbox("풍향", ['북','북동','동','남동','남','남서','서','북서'])
 
 # 예측 실행
 if st.button("🔥 화재 위험도 예측", type="primary"):
@@ -119,11 +117,13 @@ if st.button("🔥 화재 위험도 예측", type="primary"):
         기온, 강수량, 풍속, 습도, 이슬점온도, 기압, 월, 시간, 풍향
     ]], columns=['기온','강수량','풍속','습도','이슬점온도','기압','월','시간','풍향'])
     
+    # 범주형 변수를 문자열로 변환
     for c in ['월','시간','풍향']:
         X[c] = X[c].astype(str)
     
     try:
-        pool = catboost.Pool(X, cat_features=[6,7,8])
+        # CatBoost Pool에서 범주형 특성 인덱스 지정 (월, 시간, 풍향)
+        pool = catboost.Pool(X, cat_features=[6, 7, 8])
         proba = model.predict_proba(pool)[0][1]
         
         base_risk = proba * 100
@@ -160,7 +160,7 @@ if st.button("🔥 화재 위험도 예측", type="primary"):
             st.markdown(f"""
             **기상 조건:**
             - 기온: {기온}°C, 습도: {습도}%, 풍속: {풍속}m/s
-            - 강수량: {강수량}mm
+            - 강수량: {강수량}mm, 풍향: {풍향}
             
             **습윤도 평가:**
             - 최근 강수: {recent_rain_level}/5 단계
