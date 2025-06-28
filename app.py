@@ -74,6 +74,7 @@ def get_risk_level(risk):
 model = load_model()
 
 st.title("🔥 산불 위험도 예측 시스템")
+st.caption("스마트폰 날씨앱 데이터를 입력하세요")
 
 # 기상 정보 입력
 st.subheader("🌤️ 기상 정보")
@@ -165,6 +166,14 @@ if st.button("🔥 화재 위험도 예측", type="primary"):
             - 최근 강수: {recent_rain_level}/5 단계
             - 토양 습윤도: {moisture_factor:.1%}
             - 위험도 감소: {reduction:.1f}%p
+            
+            **모델 성능:**
+            - Training (Class 1: Precision 0.99, Recall 0.98)
+            - Test1 (Class 1: Precision 0.05, Recall 1.00)
+            - Test2 (Class 1: Precision 0.12, Recall 0.84)
+            
+            **하이퍼파라미터:**
+            - depth: 8, learning_rate: 0.09846, l2_leaf_reg: 0.8032, iterations: 358
             """)
             
     except Exception as e:
