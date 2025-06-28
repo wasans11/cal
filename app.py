@@ -62,13 +62,13 @@ def get_risk_level(risk):
     elif risk >= 65:
         return "🔥 매우 높음", "red"
     elif risk >= 45:
-        return "⚠️ 높음", "orange"
+        return "⚠️ 보통", "orange"
     elif risk >= 25:
-        return "🔶 보통", "gold"
+        return "🔶 낮음", "gold"
     elif risk >= 10:
-        return "💚 낮음", "green"
+        return "💚 매우낮음", "green"
     else:
-        return "✅ 매우 낮음", "blue"
+        return "✅ 극도로 낮음", "blue"
 
 # 모델 로드
 model = load_model()
