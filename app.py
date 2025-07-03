@@ -28,12 +28,11 @@ def adjust_risk(base_risk, rainfall_mm, recent_rain_level):
     return adjusted_risk, total_reduction
 
 def get_risk_level(risk):
-    if risk >= 85: return "🚨 극도로 높음", "darkred"
+    if risk >= 85: return "🚨 매우 높음", "darkred"
     elif risk >= 65: return "🔥 높음", "red"
     elif risk >= 50: return "⚠️ 보통", "orange"
     elif risk >= 30: return "🔶 낮음", "gold"
-    elif risk >= 20: return "💚 매우낮음", "green"
-    else: return "✅ 극도로 낮음", "blue"
+    else: return "💚 매우 낮음", "green"
 
 model = load_model()
 st.title("🔥 산불 위험도 예측 시스템")
