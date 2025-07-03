@@ -29,7 +29,7 @@ def adjust_risk(base_risk, rainfall_mm, recent_rain_level):
 
 def get_risk_level(risk):
     if risk >= 85: return "🚨 극도로 높음", "darkred"
-    elif risk >= 65: return "🔥 매우 높음", "red"
+    elif risk >= 65: return "🔥 높음", "red"
     elif risk >= 50: return "⚠️ 보통", "orange"
     elif risk >= 30: return "🔶 낮음", "gold"
     elif risk >= 20: return "💚 매우낮음", "green"
