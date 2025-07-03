@@ -21,7 +21,7 @@ st.markdown("""
 def load_model(): return joblib.load('m0627.pkl')
 
 def adjust_risk(base_risk, rainfall_mm, recent_rain_level):
-    rainfall_reduction = min(0.99, rainfall_mm * 0.2)  # 1mm당 20%, 최대 99%
+    rainfall_reduction = min(0.99, rainfall_mm * 0.2)
     recent_rain_reduction = {0:0.0, 1:0.05, 2:0.1, 3:0.3, 4:0.5, 5:0.7}[recent_rain_level]
     total_reduction = min(rainfall_reduction + recent_rain_reduction, 0.99)
     adjusted_risk = base_risk * (1 - total_reduction)
@@ -76,23 +76,13 @@ if st.button("🔥 화재 위험도 예측", type="primary"):
         level, color = get_risk_level(adjusted_risk)
         st.markdown(f"### 🎯 종합 위험도: <span style='color:{color}; font-weight:bold'>{level}</span>", unsafe_allow_html=True)
         st.progress(min(adjusted_risk / 100, 1.0))
-        with st.expander("📈 상세 분석"):
-            st.markdown(f"""
-            **기상 조건:**
-            - 기온: {기온}°C, 습도: {습도}%, 풍속: {풍속}m/s
-            - 강수량: {강수량}mm, 풍향: {풍향}
-            
-            **감소율 평가:**
-            - 최근 강수 감소율: {recent_rain_level}/5 단계
-            - 총 감소율: {total_reduction:.1%}
-            - 위험도 감소: {reduction:.1f}%p
-            
-            **모델 성능:**
-            - Training (Class 1: Precision 0.99, Recall 0.98)
-            - Test1 (Class 1: Precision 0.05, Recall 1.00)
-            - Test2 (Class 1: Precision 0.12, Recall 0.84)
-            
-            **하이퍼파라미터:**
-            - depth: 8, learning_rate: 0.09846, l2_leaf_reg: 0.8032, iterations: 358
-            """)
+        st.markdown("""
+        **모델 성능:**  
+        - Training (Class 1: Precision 0.99, Recall 0.98)  
+        - Test1 (Class 1: Precision 0.05, Recall 1.00)  
+        - Test2 (Class 1: Precision 0.12, Recall 0.84)  
+        
+        **하이퍼파라미터:**  
+        - depth: 8, learning_rate: 0.09846, l2_leaf_reg: 0.8032, iterations: 358
+        """)
     except Exception as e: st.error(f"예측 오류: {str(e)}")
