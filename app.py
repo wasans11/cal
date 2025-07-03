@@ -67,12 +67,10 @@ if st.button("🔥 화재 위험도 예측", type="primary"):
         st.subheader("📊 예측 결과")
         col1, col2, col3 = st.columns(3)
         with col1: st.metric("기본 예측", f"{base_risk:.1f}%")
-        with col2: st.metric("감소율 합계", f"{total_reduction:.1%}")
+    
         with col3: st.metric("최종 위험도", f"{adjusted_risk:.1f}%")
         reduction = base_risk - adjusted_risk
-        if reduction > 0: st.success(f"💧 강수 및 지면 효과로 위험도 {reduction:.1f}%p 감소")
-        elif reduction < 0: st.warning(f"⚠️ 위험도 {abs(reduction):.1f}%p 증가")
-        else: st.info("💧 감소 효과 없음")
+        
         level, color = get_risk_level(adjusted_risk)
         st.markdown(f"### 🎯 종합 위험도: <span style='color:{color}; font-weight:bold'>{level}</span>", unsafe_allow_html=True)
         st.progress(min(adjusted_risk / 100, 1.0))
