@@ -20,15 +20,17 @@ st.markdown("""
 @st.cache_resource
 def load_model(): return joblib.load('m0627.pkl')
 
-def calculate_rainfall_factor(recent_rain_level, current_rainfall, humidity):
+def calculate_rainfall_factor(recent_rain_level, current_rainfall):
     base_moisture = {0: 0.02, 1: 0.05, 2: 0.1, 3: 0.5, 4: 0.7, 5: 0.9}
     rain_multiplier = 1.0 + (current_rainfall * 0.2)
     return min(1.0, base_moisture[recent_rain_level] * rain_multiplier)
 
-def adjust_risk(base_risk, rainfall_mm, recent_rain_level, humidity):
-    soil_moisture = calculate_rainfall_factor(recent_rain_level, rainfall_mm, humidity)
-    humidity_factor = max(0, (humidity - 60) / 40) * 0.2 ; soil_factor = soil_moisture * 0.7
-    total_reduction = 1 - (1 - soil_factor) * (1 - humidity_factor) ; risk_multiplier = 1 - total_reduction
+def adjust_risk(base_risk, rainfall_mm, recent_rain_level):
+    soil_moisture = calculate_rainfall_factor(recent_rain_level, rainfall_mm)
+    rainfall_factor = min(0.2, rainfall_mm * 0.05)  # 강수량 1mm당 5% 감소, 최대 20%
+    soil_factor = soil_moisture * 0.7
+    total_reduction = 1 - (1 - soil_factor) * (1 - rainfall_factor)
+    risk_multiplier = 1 - total_reduction
     return base_risk * risk_multiplier, soil_moisture
 
 def get_risk_level(risk):
@@ -40,7 +42,8 @@ def get_risk_level(risk):
     else: return "✅ 극도로 낮음", "blue"
 
 model = load_model()
-st.title("🔥 산불 위험도 예측 시스템") ; st.caption("스마트폰 날씨앱 데이터를 입력하세요")
+st.title("🔥 산불 위험도 예측 시스템")
+st.caption("스마트폰 날씨앱 데이터를 입력하세요")
 st.subheader("🌤️ 기상 정보")
 col1, col2, col3 = st.columns([1.2, 1.2, 2], gap="large")
 
@@ -63,17 +66,19 @@ if st.button("🔥 화재 위험도 예측", type="primary"):
     X = pd.DataFrame([[기온, 강수량, 풍속, 습도, 이슬점온도, 기압, 월, 시간, 풍향]], columns=['기온','강수량','풍속','습도','이슬점온도','기압','월','시간','풍향'])
     for c in ['월','시간','풍향']: X[c] = X[c].astype(str)
     try:
-        pool = catboost.Pool(X, cat_features=[6, 7, 8]) ; proba = model.predict_proba(pool)[0][1]
-        base_risk = proba * 100 ; adjusted_risk, moisture_factor = adjust_risk(base_risk, 강수량, recent_rain_level, 습도)
+        pool = catboost.Pool(X, cat_features=[6, 7, 8])
+        proba = model.predict_proba(pool)[0][1]
+        base_risk = proba * 100
+        adjusted_risk, moisture_factor = adjust_risk(base_risk, 강수량, recent_rain_level)
         st.subheader("📊 예측 결과")
         col1, col2, col3 = st.columns(3)
         with col1: st.metric("기본 예측", f"{base_risk:.1f}%")
         with col2: st.metric("토양 습윤도", f"{moisture_factor:.1%}")
         with col3: st.metric("최종 위험도", f"{adjusted_risk:.1f}%")
         reduction = base_risk - adjusted_risk
-        if reduction > 0: st.success(f"💧 습윤 효과로 위험도 {reduction:.1f}%p 감소")
+        if reduction > 0: st.success(f"💧 강수 효과로 위험도 {reduction:.1f}%p 감소")
         elif reduction < 0: st.warning(f"⚠️ 건조 효과로 위험도 {abs(reduction):.1f}%p 증가")
-        else: st.info("💧 습윤 효과 없음")
+        else: st.info("💧 강수 효과 없음")
         level, color = get_risk_level(adjusted_risk)
         st.markdown(f"### 🎯 종합 위험도: <span style='color:{color}; font-weight:bold'>{level}</span>", unsafe_allow_html=True)
         st.progress(min(adjusted_risk / 100, 1.0))
