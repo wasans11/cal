@@ -34,26 +34,23 @@ def calculate_cumulative_rainfall_factor(recent_rain_level, current_rainfall, hu
         rain_effect = 0.0
     
     # 토양 습윤도는 강수량과 최근 강수 상태 중 높은 값 사용
-    soil_moisture = max(base_moisture[recent_rain_level], rain_effect)
+    soil_moisture = base_moisture[recent_rain_level] * rain_effect
     
     return soil_moisture
 
 def apply_smart_rainfall_adjustment(base_risk, rainfall_mm, recent_rain_level, humidity):
-    """토양 습윤도 기반 위험도 조정 + 대기 습도 별도 적용"""
-    # 토양 습윤도 계산 (강수만 반영)
+    """토양 습윤도 + 대기 습도 독립적 결합 기반 위험도 조정"""
     soil_moisture = calculate_cumulative_rainfall_factor(recent_rain_level, rainfall_mm, humidity)
     
-    # 대기 습도 효과 (별도 적용, 약한 효과)
     humidity_factor = max(0, (humidity - 60) / 40) * 0.2  # 최대 20% 감소
-    
-    # 토양 습윤도 효과 (강한 효과)
     soil_factor = soil_moisture * 0.7  # 최대 70% 감소
     
-    # 총 위험도 감소 (둘 중 큰 값 적용)
-    total_reduction = max(soil_factor, humidity_factor)
+    # 곱연산으로 두 효과를 결합
+    total_reduction = 1 - (1 - soil_factor) * (1 - humidity_factor)
     risk_multiplier = 1 - total_reduction
     
     return base_risk * risk_multiplier, soil_moisture
+
 
 def get_risk_level(risk):
     """위험도 레벨 및 색상 반환"""
