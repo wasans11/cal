@@ -55,7 +55,7 @@ with col3:
     st.markdown("**최근 3일간 눈/비/지면 상태:**")
     recent_rain_level = st.radio(
     "",
-    options=[0, 1, 2, 3, 4, 5],
+    options=[0, 1, 2, 3, 4],
     format_func=lambda x: {
         0: "🌤️ 건조 - 2-3일 최근 비/눈 없음(바닥이 마른 상태)",
         1: "⛅ 보통 - 1-2일 전 비/눈(바닥이 조금 젖어있음)",
