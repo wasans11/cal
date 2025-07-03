@@ -1,4 +1,4 @@
-import streamlit as st ; import joblib ; import pandas as pd ;import catboost
+import streamlit as st ;import joblib ; import pandas as pd ; import catboost
 
 @st.cache_resource
 def load_model():
@@ -26,15 +26,15 @@ def adjust_risk(base_risk, rainfall_mm, recent_rain_level, humidity):
 
 def get_risk_level(risk):
     """위험도 레벨 반환"""
-    if risk >= 80:
+    if risk >= 85:
         return "🚨 극도로 높음", "darkred"
     elif risk >= 65:
         return "🔥 매우 높음", "red"
-    elif risk >= 45:
+    elif risk >= 50:
         return "⚠️ 보통", "orange"
-    elif risk >= 25:
+    elif risk >= 30:
         return "🔶 낮음", "gold"
-    elif risk >= 10:
+    elif risk >= 20:
         return "💚 매우낮음", "green"
     else:
         return "✅ 극도로 낮음", "blue"
@@ -47,20 +47,21 @@ st.caption("스마트폰 날씨앱 데이터를 입력하세요")
 
 # 기상 정보 입력
 st.subheader("🌤️ 기상 정보")
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
 
 with col1:
     기온 = st.number_input("기온 (°C)", value=25.0, step=1.0)
     풍속 = st.number_input("풍속 (m/s)", value=2.0, step=1.0)
     이슬점온도 = st.number_input("이슬점온도 (°C)", value=15.0, step=1.0)
     월 = st.selectbox("월", list(range(1,13)), index=4)
+
+with col2:
     강수량 = st.number_input("현재 강수량 (mm)", value=0.0, step=1.0, min_value=0.0)
     습도 = st.number_input("습도 (%)", value=50.0, step=1.0, min_value=0.0, max_value=100.0)
     기압 = st.number_input("기압 (hPa)", value=1013.0, step=1.0)
     시간 = st.selectbox("시간", list(range(24)), index=12)
 
-with col2:
-    st.subheader("💧 최근 지표면 상태")
+with col3:
     recent_rain_level = st.radio(
         "최근 3일간 눈/비/지면 상태:",
         options=[0, 1, 2, 3, 4, 5],
@@ -70,11 +71,10 @@ with col2:
             2: "⛅ 보통 - 1-2일 전 비",
             3: "🌧️ 습윤 - 24시간 내 비",
             4: "❄️ 매우 습윤 - 최근 많은 눈",
-            5: "💧 포화 - 연속 강수"
+            5: "💧 포화 - 연속 강수""
         }[x],
         index=1
     )
-    
     풍향 = st.selectbox("풍향", ['북','북동','동','남동','남','남서','서','북서'])
 
 # 예측 실행
