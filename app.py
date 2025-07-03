@@ -11,16 +11,8 @@ def calculate_rainfall_factor(recent_rain_level, current_rainfall, humidity):
     """토양 습윤도 계산"""
     base_moisture = {0: 0.02, 1: 0.05, 2: 0.1, 3: 0.5, 4: 0.7, 5: 0.9}
     
-    if current_rainfall >= 10:
-        rain_multiplier = 8.0
-    elif current_rainfall >= 5:
-        rain_multiplier = 5.0
-    elif current_rainfall >= 1:
-        rain_multiplier = 3.0
-    elif current_rainfall > 0:
-        rain_multiplier = 1.5
-    else:
-        rain_multiplier = 1.0
+    # 연속적 감소: 0.1mm당 2% 증가 (1mm당 20% 증가)
+    rain_multiplier = 1.0 + (current_rainfall * 0.2)
     
     return min(1.0, base_moisture[recent_rain_level] * rain_multiplier)
 
