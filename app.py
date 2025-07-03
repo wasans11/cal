@@ -13,7 +13,7 @@ def calculate_cumulative_rainfall_factor(recent_rain_level, current_rainfall, hu
     """
     # 최근 강수 상태별 기본 토양 습윤도
     base_moisture = {
-        0: 0.0,    # 매우 건조
+        0: 0.00000001,    # 매우 건조
         1: 0.05,    # 건조
         2: 0.1,    # 보통
         3: 0.5,    # 습윤
