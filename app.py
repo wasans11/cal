@@ -37,17 +37,15 @@ def adjust_risk(base_risk, rainfall_mm, recent_rain_level, humidity):
 
 def get_risk_level(risk):
     """위험도 레벨 반환"""
-    if risk >= 90:
-        return "🚨 극도로 높음", "darkred"
     if risk >= 80:
-        return "🚨 매우 높음", "darkred"
+        return "🚨 극도로 높음", "darkred"
     elif risk >= 65:
-        return "🔥  높음", "red"
-    elif risk >= 50:
+        return "🔥 매우 높음", "red"
+    elif risk >= 45:
         return "⚠️ 보통", "orange"
-    elif risk >= 30:
+    elif risk >= 25:
         return "🔶 낮음", "gold"
-    elif risk >= 20:
+    elif risk >= 10:
         return "💚 매우낮음", "green"
     else:
         return "✅ 극도로 낮음", "blue"
@@ -62,15 +60,15 @@ st.subheader("🌤️ 기상 정보")
 col1, col2 = st.columns(2)
 
 with col1:
-    기온 = st.number_input("기온 (°C)", value=0, step=1)
-    풍속 = st.number_input("풍속 (m/s)", value=0, step=1)
-    이슬점온도 = st.number_input("이슬점온도 (°C)", value=0, step=1)
+    기온 = st.number_input("기온 (°C)", value=25.0, step=1.0)
+    풍속 = st.number_input("풍속 (m/s)", value=2.0, step=1.0)
+    이슬점온도 = st.number_input("이슬점온도 (°C)", value=15.0, step=1.0)
     월 = st.selectbox("월", list(range(1,13)), index=4)
 
 with col2:
-    강수량 = st.number_input("현재 강수량 (mm)", value=0.0, step=1, min_value=0.0)
-    습도 = st.number_input("습도 (%)", value=0.0, step=1, min_value=0.0, max_value=100.0)
-    기압 = st.number_input("기압 (hPa)", value=0.0, step=1)
+    강수량 = st.number_input("현재 강수량 (mm)", value=0.0, step=1.0, min_value=0.0)
+    습도 = st.number_input("습도 (%)", value=50.0, step=1.0, min_value=0.0, max_value=100.0)
+    기압 = st.number_input("기압 (hPa)", value=1013.0, step=1.0)
     시간 = st.selectbox("시간", list(range(24)), index=12)
 
 st.subheader("💧 최근 지표면 상태")
