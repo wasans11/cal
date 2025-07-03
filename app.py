@@ -57,7 +57,7 @@ def get_risk_level(risk):
     if risk >= 80:
         return "🚨 극도로 높음", "darkred"
     elif risk >= 65:
-        return "🔥 매우 높음", "red"
+        return "🔥 높음", "red"
     elif risk >= 45:
         return "⚠️ 보통", "orange"
     elif risk >= 25:
