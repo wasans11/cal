@@ -62,15 +62,15 @@ st.subheader("🌤️ 기상 정보")
 col1, col2 = st.columns(2)
 
 with col1:
-    기온 = st.number_input("기온 (°C)", value=25.0, step=0.1)
-    풍속 = st.number_input("풍속 (m/s)", value=2.0, step=0.1)
-    이슬점온도 = st.number_input("이슬점온도 (°C)", value=15.0, step=0.1)
+    기온 = st.number_input("기온 (°C)", value=0, step=1)
+    풍속 = st.number_input("풍속 (m/s)", value=0, step=1)
+    이슬점온도 = st.number_input("이슬점온도 (°C)", value=0, step=1)
     월 = st.selectbox("월", list(range(1,13)), index=4)
 
 with col2:
-    강수량 = st.number_input("현재 강수량 (mm)", value=0.0, step=0.1, min_value=0.0)
-    습도 = st.number_input("습도 (%)", value=50.0, step=1.0, min_value=0.0, max_value=100.0)
-    기압 = st.number_input("기압 (hPa)", value=1013.25, step=0.1)
+    강수량 = st.number_input("현재 강수량 (mm)", value=0.0, step=1, min_value=0.0)
+    습도 = st.number_input("습도 (%)", value=0.0, step=1, min_value=0.0, max_value=100.0)
+    기압 = st.number_input("기압 (hPa)", value=0.0, step=1)
     시간 = st.selectbox("시간", list(range(24)), index=12)
 
 st.subheader("💧 최근 지표면 상태")
