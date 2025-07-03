@@ -53,7 +53,7 @@ with col2:
 with col3:
     풍향 = st.selectbox("풍향", ['북','북동','동','남동','남','남서','서','북서'], key="wind_dir")
     st.markdown("**최근 3일간 눈/비/지면 상태:**")
-    recent_rain_level = st.radio("", options=[0, 1, 2, 3, 4, 5], format_func=lambda x: {0: "☀️ 매우 건조 - 3일 이상 비·눈 없음", 1: "🌤️ 건조 - 2-3일 전 약간의 비", 2: "⛅ 보통 - 1-2일 전 비", 3: "🌧️ 습윤 - 24시간 내 비", 4: "❄️ 매우 습윤 - 최근 많은 눈비", 5: "💧 포화 - 강우나 폭설"}[x], index=1, key="rain_level")
+    recent_rain_level = st.radio("", options=[0, 1, 2, 3, 4, 5], format_func=lambda x: {0: "☀️ 매우 건조 - 3일 이상 비·눈 없음", 1: "🌤️ 건조 - 2-3일 전 약간의 눈·비", 2: "⛅ 보통 - 1-2일 전 눈·비", 3: "🌧️ 습윤 - 24시간 내 눈·비", 4: "❄️ 매우 습윤 - 최근 많은 눈·비", 5: "💧 포화 - 강우나 폭설"}[x], index=1, key="rain_level")
 
 if st.button("🔥 화재 위험도 예측", type="primary"):
     X = pd.DataFrame([[기온, 강수량, 풍속, 습도, 이슬점온도, 기압, 월, 시간, 풍향]], columns=['기온','강수량','풍속','습도','이슬점온도','기압','월','시간','풍향'])
