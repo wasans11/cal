@@ -66,7 +66,7 @@ st.caption("스마트폰 날씨앱 데이터를 입력하세요")
 st.subheader("🌤️ 기상 정보")
 
 # 컬럼 간격 조정 및 입력칸 크기 통일
-col1, col2, col3 = st.columns([1.2, 1.2, 1.7], gap="large")
+col1, col2, col3 = st.columns([1.2, 1.2, 2], gap="large")
 
 with col1:
     기온 = st.number_input("기온 (°C)", value=25.0, step=1.0, key="temp")
