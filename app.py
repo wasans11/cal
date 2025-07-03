@@ -22,7 +22,7 @@ def load_model(): return joblib.load('m0627.pkl')
 
 def adjust_risk(base_risk, rainfall_mm, recent_rain_level):
     rainfall_reduction = min(0.99, rainfall_mm * 0.2)
-    recent_rain_reduction = {0:0.001, 1:0.1, 2:0.3, 3:0.5, 4:0.7}[recent_rain_level]
+    recent_rain_reduction = {0:0.001, 1:0.15, 2:0.35, 3:0.7, 4:0.9}[recent_rain_level]
     total_reduction = min(rainfall_reduction + recent_rain_reduction, 0.99)
     adjusted_risk = base_risk * (1 - total_reduction)
     return adjusted_risk, total_reduction
