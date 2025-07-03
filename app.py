@@ -1,7 +1,4 @@
-import streamlit as st
-import joblib
-import pandas as pd
-import catboost
+import streamlit as st ; import joblib ; import pandas as pd ; import catboost
 
 @st.cache_resource
 def load_model():
