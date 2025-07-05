@@ -63,9 +63,9 @@ if st.button("🔥 화재 위험도 예측", type="primary"):
         
         st.markdown("""
         **모델 성능:**
-        - Training (Class 1: Precision 0.99, Recall 0.98)
-        - Test1 (Class 1: Precision 0.05, Recall 1.00)
-        - Test2 (Class 1: Precision 0.12, Recall 0.84)
+        - Training (Class 1: Precision 0.99, Recall 0.98) 3대1비율
+        - Test1 (Class 1: Precision 0.05, Recall 1.00) 화재비율 2% 가정
+        - Test2 (Class 1: Precision 0.12, Recall 0.84) 화재비율 5% 가정
         - 문턱값 : 0.65
         **하이퍼파라미터:**
         - depth: 8, learning_rate: 0.09846, l2_leaf_reg: 0.8032, iterations: 358
